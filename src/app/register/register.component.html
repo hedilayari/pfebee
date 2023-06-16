@@ -1,0 +1,89 @@
+<div class="grid grid-flow-col auto-cols-max flex h-screen justify-end items-center mr-12 ">
+    <div class="h-screen mr-44 mt-0"><ng-lottie  [options]="options"> </ng-lottie></div>
+    <form #monForm=ngForm class="card shadow-2xl pt-6 px-8 pb-8 mb-4" (ngSubmit)="registeradmin(monForm)">
+        <div class="flex justify-center items-center mb-4">
+            <div class=" bg-gradient-to-r from-orange-500 to-yellow-300 relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <i class="material-icons" style="color: white;">lock_person</i>
+
+            </div>
+        </div>
+        <div class="flex justify-center items-center mb-2">
+            <h1 class="font-bold" style="font-family: 'Dancing Script', cursive; font-size: 30px;">Registration</h1>
+        </div>
+        <div *ngIf="success==false" class="flex justify-center items-center" style="color: red;">
+            <i class="bi bi-exclamation-circle mt-1">{{errmsg}}</i>  
+        </div>
+        <div *ngIf="success==true" class="flex justify-center items-center" style="color: green;">
+            <i class="bi bi-check-circle">{{errmsg}}</i>  
+        </div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;">Name</label>
+            <input type="text" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 
+            focus:outline-none "
+            required
+            name="name"
+            [(ngModel)]="user.name"
+            #name="ngModel"
+            >
+
+        </div>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic">Name required</div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;">Last Name</label>
+            <input type="text" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 
+            focus:outline-none "
+            required
+            name="lastname"
+            [(ngModel)]="user.lastname"
+            #lastname="ngModel"
+            >
+        </div>
+        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic">Last Name required</div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;">Email</label>
+            <input type="text" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 
+            focus:outline-none "
+            required
+            name="email"
+            [(ngModel)]="user.email"
+            #email="ngModel"
+            email>
+        </div>
+
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic">Email required</div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;">Password</label>
+            <input type="password" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 focus:outline-none "
+            name="password"
+            [(ngModel)]="user.password"
+            required
+            #password="ngModel">
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic">Password required</div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;" for="confirmpasswod">Confirm Password</label>
+            <input type="password" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 focus:outline-none "
+            name="confirmpassword"
+            id="confirmpassword"
+            [(ngModel)]="confirmpass"
+            required
+            #confirmpassword="ngModel">
+        </div>
+        
+        <div *ngIf="confirmpassword.valid && confirmpassword.value!=password.value"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic"> password do not match</div>
+        <div *ngIf="confirmpassword.touched && confirmpassword.invalid"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic"> Confirm Password required</div>
+
+       <div class="flex justify-center items-center mt-4  px-2 py-2 bg-gradient-to-r from-orange-500 to-yellow-300 text-white  ">
+        <button type="submit" [disabled]="monForm.invalid || confirmpassword.invalid || confirmpassword.value !== password.value" style="font-family: 'Dancing Script', cursive; font-size: 24px;">Register</button>
+    </div>
+       <div class="mt-4 flex justify-center items-center " style="font-family: 'Roboto', sans-serif;" ><p>have you an account? <a style="color: rgb(255, 128, 0); font-family: 'Roboto', sans-serif;"  href="/login">Log In</a>  </p></div>
+
+    </form>
+</div>
+<div>
+

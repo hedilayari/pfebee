@@ -1,0 +1,49 @@
+
+<div class="grid grid-flow-col auto-cols-max flex h-screen justify-end items-center mr-12 ">
+    <div class="h-screen mr-4 mt-0 w-3/4"><ng-lottie  [options]="options"> </ng-lottie></div>
+    <form #monForm=ngForm class="card shadow-2xl pt-6 px-8 pb-8 mb-4" (ngSubmit)="login(monForm)">
+        <div class="flex justify-center items-center mb-4">
+            <div class="  bg-gradient-to-r from-orange-500 to-yellow-300 relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <i class="material-icons" style="color: rgb(255, 255, 255);">account_circle</i>
+
+            </div>
+        </div>
+        <div class="flex justify-center items-center mb-2">
+            <h1 class="font-bold" style="font-family: 'Dancing Script', cursive; font-size: 30px; font-weight:bold;">Member Login</h1>
+        </div>
+        
+        <div *ngIf="msg" class="flex justify-center items-center" style="color: red;">
+            <i class="bi bi-exclamation-circle mt-1">{{msg}}</i>  
+        </div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;">Email</label>
+            <input type="text" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 
+            focus:outline-none "
+            required
+            name="email"
+            [(ngModel)]="user.email"
+            #email="ngModel"
+            email>
+        </div>
+
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic">Check your email</div>
+        <div class="mb-2">
+            <label style="font-family: 'Roboto', sans-serif;">Password</label>
+            <input type="password" 
+            class=" border-inherit rounded border-2 w-full px-2 py-2 mt-2 focus:outline-none "
+            name="password"
+            [(ngModel)]="user.password"
+            required
+            #password="ngModel">
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"style="color:red; font-family: 'Roboto', sans-serif; font-style:italic " >Check your password</div>
+
+        
+       <div class="flex justify-center items-center mt-4  px-2 py-2 bg-gradient-to-r from-orange-500 to-yellow-300 text-white  ">
+        <button type="submit" [disabled]="monForm.invalid" style="font-family: 'Dancing Script', cursive; font-size: 24px;">Log In</button>
+       </div>
+       <div class="mt-4 flex justify-center items-center " style="font-family: 'Roboto', sans-serif;"><p>Don't have an account? <a style="color: rgb(255, 128, 0); font-family: 'Roboto', sans-serif;" href="/register" >Register</a>  </p></div>
+    </form>
+</div>
+<div>

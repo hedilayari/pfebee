@@ -1,0 +1,6 @@
+.dotted {
+    stroke-dasharray: 2;
+  }
+  button[disabled] {
+    opacity: 0.5;
+  }
