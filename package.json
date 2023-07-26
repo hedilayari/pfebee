@@ -34,6 +34,7 @@
     "material-icons": "^1.13.6",
     "ng-apexcharts": "^1.7.6",
     "ngx-lottie": "^8.3.0",
+    "ngx-toastr": "^13.2.1",
     "ol": "^7.3.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

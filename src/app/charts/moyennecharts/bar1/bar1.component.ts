@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -16,7 +16,6 @@ import { MoyenneService } from "src/app/services/moyenne.service";
 import { Moyenne } from "src/app/shared/moyenne";
 import { Subscription, timer } from 'rxjs';
 import { switchMap, take, share } from 'rxjs/operators';
-import { style } from "@angular/animations";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -36,21 +35,21 @@ export type ChartOptions = {
   templateUrl: './bar1.component.html',
   styleUrls: ['./bar1.component.css']
 })
-export class Bar1Component implements OnInit {
+export class Bar1Component implements OnInit, OnDestroy {
 
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   private subscription!: Subscription;
 
-  constructor(private moyservice: MoyenneService) {
+  constructor(private moyService: MoyenneService) {
     this.chartOptions = {
       series: [
         {
-         name: "temperature",
+          name: "temperature",
           data: []
         },
         {
-        name: "humidity",
+          name: "humidity",
           data: []
         },
         {
@@ -77,9 +76,7 @@ export class Bar1Component implements OnInit {
         colors: ["transparent"]
       },
       xaxis: {
-        categories: [
-       
-        ]
+        categories: []
       },
       yaxis: {
         title: {
@@ -89,19 +86,26 @@ export class Bar1Component implements OnInit {
       fill: {
         opacity: 1
       },
-      
     };
   }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
+  }
+
+  private loadData() {
     this.subscription = timer(0, 10000).pipe(
       take(10), // Adjust the number of iterations as needed
-      switchMap(() => this.moyservice.getAllValues()),
+      switchMap(() => this.moyService.getAllValues()),
       share() // Multicast the observable
     ).subscribe((data: Moyenne[]) => {
       const labels = data.map(d => d.mois);
-    const values3 = data.map(d => d.temp);
-     const values2 = data.map(d => d.hum);
+      const values3 = data.map(d => d.temp);
+      const values2 = data.map(d => d.hum);
       const values1 = data.map(d => d.poid);
 
       // Update chart data
@@ -115,8 +119,5 @@ export class Bar1Component implements OnInit {
       };
     });
   }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
-  }
 }
+

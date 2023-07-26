@@ -18,7 +18,8 @@ import { MapsComponent } from './maps/maps.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule} from '@angular/common/http';
 import { Bar1Component } from './charts/moyennecharts/bar1/bar1.component';
-
+import { NotificationComponent } from './notification/notification.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 export function playerFactory(): any {  
@@ -38,15 +39,18 @@ export function playerFactory(): any {
     MapsComponent,
     RegisterComponent,
     Bar1Component,
+    NotificationComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LottieModule.forRoot({ player: playerFactory }),  
+    
     FormsModule,
     NgApexchartsModule,
     HttpClientModule,
+    
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
