@@ -36,8 +36,8 @@ export class MapComponent implements AfterViewInit {
         this.vector // Ajouter la couche de vecteur des marqueurs à la carte
       ],
       view: new View({
-        center: fromLonLat([2.3522, 48.8566]), // Coordonnées de Paris
-        zoom: 18
+        center: fromLonLat([10.05, 33.51]), // Coordonnées de Paris
+        zoom: 14
       })
     });
   }
@@ -54,7 +54,7 @@ export class MapComponent implements AfterViewInit {
   
     // Ajouter un marqueur à la source de vecteur
     const marker = new Feature({
-      geometry: new Point(fromLonLat([2.3522, 48.8566])) // Coordonnées de Paris
+      geometry: new Point(fromLonLat([10.05, 33.51])) // Coordonnées de Paris
     });
     marker.setStyle(markerStyle);
     this.source.addFeature(marker);

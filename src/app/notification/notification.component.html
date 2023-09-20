@@ -15,15 +15,24 @@
         <ng-container *ngIf="notifDetected.length === 0">
           <p>No notification</p>
         </ng-container>
-        <div *ngFor="let flame of notifDetected; let i = index">
+        <div *ngFor="let item of notifDetected; let i = index">
           <div class="flex items-start mb-4" [ngClass]="{'border-b': i !== notifDetected.length - 1}">
             <div class="bg-red-500 rounded-full h-8 w-8 flex items-center justify-center">
               <i class="material-icons text-white">error</i>
             </div>
             <div class="ml-3">
-              <p class="text-lg font-bold">Flame Detected</p>
+              <p class="text-lg font-bold">Alert:</p>
+              <p *ngIf="item.poid > 50">The weight exceeds the maximum threshold</p>
+              <p *ngIf="item.poid < 16">The weight is below the normal weight</p>
+              <p *ngIf="item.hum >= 50">Humidity exceeds the ideal value</p>
+              <p *ngIf="item.hum <= 15">Humidity is below the ideal value</p>
+              <p *ngIf="item.temp >= 40">Temperature exceeds the ideal temperature</p>
+              <p *ngIf="item.temp <= 20">Temperature is below the ideal temperature</p>
+              <p *ngIf="item.analog > 500">The hive is open</p>
               <p class="text-gray-500">{{ dates[i] }}</p>
-            </div>
+          </div>
+          
+        
             <button class="ml-auto text-gray-500" style="font-size: small;" (click)="markNotificationAsRead(i)">
               Mark as Read
             </button>

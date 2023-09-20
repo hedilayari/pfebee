@@ -30,10 +30,28 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   private loadData() {
     this.iotService.getAllValues().subscribe((data: Iot[]) => {
-      this.notifDetected = data.filter(d => d.latitude != 0 && d.longitude != 0).slice(0, 10);
+      this.notifDetected = data.filter(d => {
+        // Filtrer les données en fonction des seuils
+        const poidsMax = 50;
+        const poidsMin = 16;
+        const humiditeMax = 20;
+        const humiditeMin = 15;
+        const temperatureMax = 40;
+        const temperatureMin = 30;
+        const analogSeuil = 500; // Seuil pour l'analogique
+  
+        const poidsAlerte = d.poid > poidsMax || d.poid < poidsMin;
+        const humiditeAlerte = d.hum >= humiditeMax || d.hum <= humiditeMin;
+        const temperatureAlerte = d.temp >= temperatureMax || d.temp <= temperatureMin;
+        const analogAlerte = d.analog > analogSeuil;
+  
+        return poidsAlerte || humiditeAlerte || temperatureAlerte || analogAlerte;
+      }).slice(0, 999999);
+  
       this.updateDates(data);
     });
   }
+  
 
   private updateDates(data: Iot[]) {
     this.dates = data.map(d => this.formatDate(d.timestamp));
@@ -61,8 +79,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   }
 
-  markNotificationAsRead(index: number) {
-    this.notifDetected.splice(index, 1);
+  markNotificationAsRead(i: number) {
+    const copyOfNotifications = [...this.notifDetected];
+    copyOfNotifications.splice(i, 1);
+    this.notifDetected = copyOfNotifications;
   }
+  
+  
 }
 

@@ -4,5 +4,7 @@ export interface Iot {
     poid: number;
     latitude:number;
     longitude:number;
+    analog:number;
     timestamp: any;
+
 }
